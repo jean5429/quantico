@@ -260,7 +260,7 @@
                 scrollTimeout = setTimeout(() => {
                     isScrolling = false;
                     updateNavigation(); // Ensure navigation state is correct after programmatic scroll
-                }, 1500); // Adjust delay based on scroll-behavior: smooth duration
+                }, 700); // Adjust delay based on scroll-behavior: smooth duration
             }, { passive: false }); // Use passive: false to allow preventDefault
 
             // Initial update and event listener for scroll (for programmatic scrolls)
