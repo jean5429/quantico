@@ -8,9 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- MathJax for LaTeX rendering -->
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
     <!-- Chosen Palette: Calm Harmony with Liquid Glass Inspiration -->
     <!-- Application Structure Plan: The application maintains its "full-page scroll" experience, where each section occupies the full viewport and snaps into place. The primary navigation is now exclusively through mouse scroll (or touch swipe) and the fixed footer's pagination dots/progress bar. This structure is highly immersive and visually driven, ideal for a general audience to consume complex information in bite-sized, interactive chunks. The header remains removed for a cleaner, focused UI. -->
-    <!-- Visualization & Content Choices: 1. Misused Terms: Goal(Inform) -> Dynamic text rotator(Presentation) -> Automatic cycle(Interaction) -> Concise text, visually engaging. Vanilla JS(Method). 2. Ramp vs. Stairs Analogy: Goal(Compare) -> Two side-by-side interactive canvases(Presentation) -> Balls now automatically move in a loop, demonstrating continuous vs. discrete without user interaction(Interaction) -> Directly illustrates the core concept. HTML Canvas/JS(Method). 3. Photons (Remote Control): Goal(Explain) -> Simplified animation with emojis(Presentation) -> Photon emission now loops automatically(Interaction) -> Direct, simple visualization of "packets." HTML/CSS/JS(Method). 4. Electron Orbits: Goal(Organize/Explain) -> Interactive atomic model diagram(Presentation) -> Electron now automatically moves between energy levels in a loop(Interaction) -> Visualizes abstract energy levels concretely. HTML Canvas/JS(Method). 5. Applications: Goal(Inform) -> Grid of cards with minimal text(Presentation) -> Hover for brief detail(Interaction) -> Quick overview of real-world impact. HTML/CSS(Method). 6. Footer Pagination/Progress: Goal(Navigate/Inform Progress) -> Dots for pages, horizontal bar for progress(Presentation) -> Click dots for direct navigation, bar updates on scroll(Interaction) -> Provides clear navigation and sense of progress. HTML/CSS/JS(Method). -->
+    <!-- Visualization & Content Choices: 1. Misused Terms: Goal(Inform) -> Dynamic text rotator(Presentation) -> Automatic cycle(Interaction) -> Concise text, visually engaging. Vanilla JS(Method). 2. Ramp vs. Stairs Analogy: Goal(Compare) -> Two side-by-side interactive canvases(Presentation) -> Balls now automatically move in a loop, demonstrating continuous vs. discrete without user interaction(Interaction) -> Directly illustrates the core concept. HTML Canvas/JS(Method). 3. Photons (Remote Control): Goal(Explain) -> Simplified animation with emojis(Presentation) -> Photon emission now loops automatically(Interaction) -> Direct, simple visualization of "packets." HTML/CSS/JS(Method). 4. Electron Orbits: Goal(Organize/Explain) -> Interactive atomic model diagram(Presentation) -> Electron now automatically moves between energy levels in a loop(Interaction) -> Visualizes abstract energy levels concretely. HTML Canvas/JS(Method). 5. Applications: Goal(Inform) -> Grid of cards with minimal text(Presentation) -> Hover for brief detail(Interaction) -> Quick overview of real-world impact. HTML/CSS/Method). 6. Footer Pagination/Progress: Goal(Navigate/Inform Progress) -> Dots for pages, horizontal bar for progress(Presentation) -> Click dots for direct navigation, bar updates on scroll(Interaction) -> Provides clear navigation and sense of progress. HTML/CSS/JS(Method). -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -57,11 +61,44 @@
         section:nth-child(even) {
             box-shadow: inset 0 0 50px rgba(21, 94, 117, 0.05); /* subtle darker cyan glow */
         }
+        .complex-formula {
+            font-family: serif; /* To make mathematical symbols look more traditional */
+            font-size: 2.5rem; /* Large size */
+            line-height: 1.2;
+            color: #1a202c; /* Darker color for contrast */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 768px) {
+            .complex-formula {
+                font-size: 4rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .complex-formula {
+                color: white;
+                text-shadow: 1px;
+                font-size: 5rem;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <main class="relative">
+
+        <section id="intro-complex" class="text-center bg-slate-900 text-white">
+            <h2 class="text-5xl md:text-6xl font-extrabold text-white mb-6">Física Quântica</h2>
+            <p class="text-xl md:text-2xl font-light text-slate-300 max-w-4xl mx-auto mb-12">
+                A Dualidade Onda-Partícula e a Superposição de Estados no Emaranhamento Quântico
+            </p>
+            <!-- MathJax will render this LaTeX formula -->
+            <div class="complex-formula px-4">
+                $$ i\hbar \frac{\partial}{\partial t} |\Psi(t)\rangle = \hat{H} |\Psi(t)\rangle $$
+            </div>
+            <p class="text-sm text-slate-500 mt-8">
+                (Equação de Schrödinger dependente do tempo)
+            </p>
+        </section>
 
         <section id="inicio" class="text-center">
             <h2 class="text-5xl md:text-6xl font-extrabold text-slate-800 mb-6">Desmistificando o <span class="quantum-text-gradient">"Quântico"</span></h2>
@@ -88,7 +125,7 @@
                     <h4 class="text-2xl font-bold mb-2 text-slate-800">Mundo Quântico: A Escada</h4>
                     <p class="mb-4 text-slate-600 font-light">Discreto. Apenas degraus.</p>
                     <div class="bg-slate-100 rounded-lg p-2">
-                         <canvas id="escadaCanvas" class="w-full h-48 rounded-md"></canvas>
+                           <canvas id="escadaCanvas" class="w-full h-48 rounded-md"></canvas>
                     </div>
                 </div>
             </div>
@@ -100,15 +137,15 @@
 
             <div class="card mb-12 w-full max-w-4xl">
                  <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="text-center md:text-left">
-                        <h4 class="text-2xl font-bold mb-2 text-slate-800">Luz em Pacotes: Fótons</h4>
-                        <p class="text-slate-600 mb-4 font-light">Seu controle remoto envia "pacotes" de luz (fótons).</p>
-                    </div>
-                    <div id="remote-animation-container" class="relative flex items-center justify-around h-40">
-                         <div class="text-7xl">🕹️</div>
-                         <div class="text-7xl">📺</div>
-                    </div>
-                </div>
+                     <div class="text-center md:text-left">
+                         <h4 class="text-2xl font-bold mb-2 text-slate-800">Luz em Pacotes: Fótons</h4>
+                         <p class="text-slate-600 mb-4 font-light">Seu controle remoto envia "pacotes" de luz (fótons).</p>
+                     </div>
+                     <div id="remote-animation-container" class="relative flex items-center justify-around h-40">
+                           <div class="text-7xl">🕹️</div>
+                           <div class="text-7xl">📺</div>
+                     </div>
+                 </div>
             </div>
 
             <div class="card w-full max-w-4xl">
@@ -167,7 +204,8 @@
             <div id="footer-nav-dots" class="flex space-x-3">
                 <!-- Dots will be generated here by JS -->
             </div>
-            <div class="flex-grow max-w-xs h-2 bg-slate-200 rounded-full overflow-hidden">
+            <!-- Adjusted width for the progress bar to occupy full available space -->
+            <div class="flex-grow w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div id="progress-bar" class="h-full bg-cyan-600 transition-all duration-300 ease-out" style="width: 0%;"></div>
             </div>
         </div>
@@ -186,12 +224,12 @@
 
             // Dynamic text rotator
             setInterval(() => {
-                textIndex = (textIndex + 1) % texts.length;
-                cycledText.style.opacity = 0;
+                cycledText.style.opacity = 0; // Fade out
                 setTimeout(() => {
+                    textIndex = (textIndex + 1) % texts.length;
                     cycledText.textContent = texts[textIndex];
-                    cycledText.style.opacity = 1;
-                }, 500);
+                    cycledText.style.opacity = 1; // Fade in
+                }, 500); // Wait for fade out to complete before changing text and fading in
             }, 3000);
 
             // Generate footer navigation dots
@@ -233,22 +271,30 @@
                     });
                 }
 
+                // Calculate progress based on the current section index
                 const progress = (currentSectionIndex / (sections.length - 1)) * 100;
                 progressBar.style.width = `${progress}%`;
             }
 
-            // Custom scroll logic for full-page jumps
+            // Custom scroll logic for full-page jumps (Mouse Wheel and Touch)
             let scrollTimeout;
-            window.addEventListener('wheel', (e) => {
+            const scrollThreshold = 50; // Minimum scroll delta to trigger a page jump
+
+            function handleScrollEvent(e) {
                 e.preventDefault(); // Prevent default scroll behavior
 
                 if (isScrolling) return;
+
+                let delta = e.deltaY || (e.touches ? e.touches[0].clientY - (e._lastY || e.touches[0].clientY) : 0);
+                if (e.touches) e._lastY = e.touches[0].clientY; // Store last Y for touch delta calculation
+
+                if (Math.abs(delta) < scrollThreshold) return; // Ignore small scrolls
 
                 isScrolling = true;
                 clearTimeout(scrollTimeout); // Clear any pending scroll actions
 
                 let targetSectionIndex = currentSectionIndex;
-                if (e.deltaY > 0) { // Scrolling down
+                if (delta > 0) { // Scrolling down
                     targetSectionIndex = Math.min(sections.length - 1, currentSectionIndex + 1);
                 } else { // Scrolling up
                     targetSectionIndex = Math.max(0, currentSectionIndex - 1);
@@ -261,7 +307,12 @@
                     isScrolling = false;
                     updateNavigation(); // Ensure navigation state is correct after programmatic scroll
                 }, 700); // Adjust delay based on scroll-behavior: smooth duration
-            }, { passive: false }); // Use passive: false to allow preventDefault
+            }
+
+            window.addEventListener('wheel', handleScrollEvent, { passive: false });
+            window.addEventListener('touchstart', (e) => { e._lastY = e.touches[0].clientY; }, { passive: false });
+            window.addEventListener('touchmove', handleScrollEvent, { passive: false });
+
 
             // Initial update and event listener for scroll (for programmatic scrolls)
             updateNavigation();
