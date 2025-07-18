@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desmistificando o Quântico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony with Liquid Glass Inspiration -->
+    <!-- Application Structure Plan: The application maintains its "full-page scroll" experience, where each section occupies the full viewport and snaps into place. The primary navigation is now exclusively through mouse scroll (or touch swipe) and the fixed footer's pagination dots/progress bar. This structure is highly immersive and visually driven, ideal for a general audience to consume complex information in bite-sized, interactive chunks. The header remains removed for a cleaner, focused UI. -->
+    <!-- Visualization & Content Choices: 1. Misused Terms: Goal(Inform) -> Dynamic text rotator(Presentation) -> Automatic cycle(Interaction) -> Concise text, visually engaging. Vanilla JS(Method). 2. Ramp vs. Stairs Analogy: Goal(Compare) -> Two side-by-side interactive canvases(Presentation) -> Balls now automatically move in a loop, demonstrating continuous vs. discrete without user interaction(Interaction) -> Directly illustrates the core concept. HTML Canvas/JS(Method). 3. Photons (Remote Control): Goal(Explain) -> Simplified animation with emojis(Presentation) -> Photon emission now loops automatically(Interaction) -> Direct, simple visualization of "packets." HTML/CSS/JS(Method). 4. Electron Orbits: Goal(Organize/Explain) -> Interactive atomic model diagram(Presentation) -> Electron now automatically moves between energy levels in a loop(Interaction) -> Visualizes abstract energy levels concretely. HTML Canvas/JS(Method). 5. Applications: Goal(Inform) -> Grid of cards with minimal text(Presentation) -> Hover for brief detail(Interaction) -> Quick overview of real-world impact. HTML/CSS(Method). 6. Footer Pagination/Progress: Goal(Navigate/Inform Progress) -> Dots for pages, horizontal bar for progress(Presentation) -> Click dots for direct navigation, bar updates on scroll(Interaction) -> Provides clear navigation and sense of progress. HTML/CSS/JS(Method). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+            overflow-y: hidden; /* Hide default scrollbar to enforce custom scroll behavior */
+            scroll-behavior: smooth; /* Ensure smooth programmatic scrolling */
+        }
+        section {
+            min-height: 100vh; /* Each section takes full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem; /* Consistent padding */
+            box-sizing: border-box; /* Include padding in height calculation */
+            position: relative; /* For background effects */
+        }
+        .quantum-text-gradient {
+            background: linear-gradient(to right, #0e7490, #155e75); /* cyan-700 to cyan-800 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+            @apply px-6 py-3 bg-cyan-600 text-white font-semibold rounded-full shadow-lg hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-75 transition-colors duration-300 transform hover:scale-105;
+        }
+        .card {
+            @apply bg-white/70 backdrop-blur-md p-6 rounded-3xl shadow-xl border border-slate-100; /* Liquid Glass effect */
+        }
+        canvas {
+            touch-action: none;
+        }
+        .footer-nav-dot {
+            @apply w-3 h-3 bg-slate-400 rounded-full cursor-pointer transition-colors duration-300;
+        }
+        .footer-nav-dot.active {
+            @apply bg-cyan-600 w-4 h-4;
+        }
+        /* Subtle glow for sections */
+        section:nth-child(odd) {
+            box-shadow: inset 0 0 50px rgba(14, 116, 144, 0.05); /* subtle cyan glow */
+        }
+        section:nth-child(even) {
+            box-shadow: inset 0 0 50px rgba(21, 94, 117, 0.05); /* subtle darker cyan glow */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="relative">
+
+        <section id="inicio" class="text-center">
+            <h2 class="text-5xl md:text-6xl font-extrabold text-slate-800 mb-6">Desmistificando o <span class="quantum-text-gradient">"Quântico"</span></h2>
+            <p class="text-xl md:text-2xl font-light text-slate-600 max-w-3xl mx-auto mb-8">O termo está em todo lugar, mas o que ele realmente significa?</p>
+            <div class="mt-8 text-3xl font-semibold">
+                <span>É mais que </span>
+                <span id="cycled-text" class="quantum-text-gradient font-bold transition-opacity duration-500">Massagem Quântica</span>
+            </div>
+            <div class="text-9xl mt-12 animate-bounce">✨</div>
+        </section>
+
+        <section id="analogia" class="text-center">
+            <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">A Ideia Central: Pacotes</h3>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">"Quantum" significa **quantidade discreta**. Pense na diferença entre uma rampa e uma escada. Veja!</p>
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center w-full max-w-4xl">
+                <div class="card text-center">
+                    <h4 class="text-2xl font-bold mb-2 text-slate-800">Mundo Clássico: A Rampa</h4>
+                    <p class="mb-4 text-slate-600 font-light">Contínuo. Sem interrupções.</p>
+                    <div class="bg-slate-100 rounded-lg p-2">
+                        <canvas id="rampaCanvas" class="w-full h-48 rounded-md"></canvas>
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <h4 class="text-2xl font-bold mb-2 text-slate-800">Mundo Quântico: A Escada</h4>
+                    <p class="mb-4 text-slate-600 font-light">Discreto. Apenas degraus.</p>
+                    <div class="bg-slate-100 rounded-lg p-2">
+                         <canvas id="escadaCanvas" class="w-full h-48 rounded-md"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="exemplos" class="text-center">
+             <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Exemplos do Dia a Dia</h3>
+             <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">Essa ideia de "pacotes" acontece de verdade com luz e partículas. Veja como:</p>
+
+            <div class="card mb-12 w-full max-w-4xl">
+                 <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center md:text-left">
+                        <h4 class="text-2xl font-bold mb-2 text-slate-800">Luz em Pacotes: Fótons</h4>
+                        <p class="text-slate-600 mb-4 font-light">Seu controle remoto envia "pacotes" de luz (fótons).</p>
+                    </div>
+                    <div id="remote-animation-container" class="relative flex items-center justify-around h-40">
+                         <div class="text-7xl">🕹️</div>
+                         <div class="text-7xl">📺</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card w-full max-w-4xl">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="order-2 md:order-1">
+                       <div class="bg-slate-100 rounded-lg p-2">
+                            <canvas id="atomCanvas" class="w-full h-64 md:h-80 rounded-md"></canvas>
+                       </div>
+                    </div>
+                    <div class="text-center md:text-left order-1 md:order-2">
+                        <h4 class="text-2xl font-bold mb-2 text-slate-800">Elétrons em Degraus</h4>
+                        <p class="text-slate-600 mb-4 font-light">Elétrons em átomos ocupam "degraus" de energia.</p>
+                        <p id="atom-message" class="mt-4 text-center md:text-left font-semibold text-cyan-700 h-5"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="aplicacoes" class="text-center">
+             <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Impacto no Seu Dia</h3>
+             <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">A física quântica é a base da tecnologia moderna. Ela está em:</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-6xl">
+                <div class="card text-center group">
+                    <div class="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">💻</div>
+                    <h4 class="text-xl font-bold mb-2 text-slate-800">Microchips</h4>
+                    <p class="text-slate-600 text-sm font-light">Controle de elétrons em "degraus".</p>
+                </div>
+                 <div class="card text-center group">
+                    <div class="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">💿</div>
+                    <h4 class="text-xl font-bold mb-2 text-slate-800">Lasers</h4>
+                    <p class="text-slate-600 text-sm font-light">Elétrons emitem "pacotes" de luz.</p>
+                </div>
+                <div class="card text-center group">
+                    <div class="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">☀️</div>
+                    <h4 class="text-xl font-bold mb-2 text-slate-800">Energia Solar</h4>
+                    <p class="text-slate-600 text-sm font-light">Fótons "empurram" elétrons.</p>
+                </div>
+                 <div class="card text-center group">
+                    <div class="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">🩺</div>
+                    <h4 class="text-xl font-bold mb-2 text-slate-800">Ressonância Magnética</h4>
+                    <p class="text-slate-600 text-sm font-light">Usa o "spin" quântico.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusao" class="text-center">
+            <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Então, "Quântico" é...</h3>
+            <p class="text-xl md:text-2xl font-light text-slate-600 max-w-3xl mx-auto mb-6">...a descrição de que a natureza funciona em <span class="font-bold text-cyan-700">pacotes discretos</span>.</p>
+            <p class="text-xl md:text-2xl font-light text-slate-600 max-w-3xl mx-auto">Não é magia, é a ciência que possibilita a tecnologia que usamos todos os dias. ✨</p>
+        </section>
+
+    </main>
+
+    <footer class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-slate-200 py-4 z-50">
+        <div class="container mx-auto px-6 flex justify-center items-center space-x-4">
+            <div id="footer-nav-dots" class="flex space-x-3">
+                <!-- Dots will be generated here by JS -->
+            </div>
+            <div class="flex-grow max-w-xs h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-cyan-600 transition-all duration-300 ease-out" style="width: 0%;"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const footerNavDotsContainer = document.getElementById('footer-nav-dots');
+            const progressBar = document.getElementById('progress-bar');
+            const cycledText = document.getElementById('cycled-text');
+            const texts = ["TV Quântica", "Terapia Quântica", "Palestras Quânticas", "Massagem Quântica"];
+            let textIndex = 0;
+            let currentSectionIndex = 0;
+            let isScrolling = false; // Flag to prevent rapid scrolling
+
+            // Dynamic text rotator
+            setInterval(() => {
+                textIndex = (textIndex + 1) % texts.length;
+                cycledText.style.opacity = 0;
+                setTimeout(() => {
+                    cycledText.textContent = texts[textIndex];
+                    cycledText.style.opacity = 1;
+                }, 500);
+            }, 3000);
+
+            // Generate footer navigation dots
+            sections.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'footer-nav-dot';
+                dot.dataset.index = index;
+                dot.addEventListener('click', () => {
+                    sections[index].scrollIntoView({ behavior: 'smooth' });
+                });
+                footerNavDotsContainer.appendChild(dot);
+            });
+
+            const navDots = document.querySelectorAll('.footer-nav-dot');
+
+            // Update active dot and progress bar based on scroll position
+            function updateNavigation() {
+                let newCurrentSectionIndex = 0;
+                let minDistance = Infinity;
+
+                sections.forEach((section, index) => {
+                    const rect = section.getBoundingClientRect();
+                    // Use absolute distance from viewport top to find the closest section
+                    const distance = Math.abs(rect.top); 
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        newCurrentSectionIndex = index;
+                    }
+                });
+
+                if (newCurrentSectionIndex !== currentSectionIndex) {
+                    currentSectionIndex = newCurrentSectionIndex;
+                    navDots.forEach((dot, index) => {
+                        if (index === currentSectionIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+
+                const progress = (currentSectionIndex / (sections.length - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            // Custom scroll logic for full-page jumps
+            let scrollTimeout;
+            window.addEventListener('wheel', (e) => {
+                e.preventDefault(); // Prevent default scroll behavior
+
+                if (isScrolling) return;
+
+                isScrolling = true;
+                clearTimeout(scrollTimeout); // Clear any pending scroll actions
+
+                let targetSectionIndex = currentSectionIndex;
+                if (e.deltaY > 0) { // Scrolling down
+                    targetSectionIndex = Math.min(sections.length - 1, currentSectionIndex + 1);
+                } else { // Scrolling up
+                    targetSectionIndex = Math.max(0, currentSectionIndex - 1);
+                }
+
+                sections[targetSectionIndex].scrollIntoView({ behavior: 'smooth' });
+
+                // Reset isScrolling flag after a short delay to allow the scroll animation to complete
+                scrollTimeout = setTimeout(() => {
+                    isScrolling = false;
+                    updateNavigation(); // Ensure navigation state is correct after programmatic scroll
+                }, 700); // Adjust delay based on scroll-behavior: smooth duration
+            }, { passive: false }); // Use passive: false to allow preventDefault
+
+            // Initial update and event listener for scroll (for programmatic scrolls)
+            updateNavigation();
+            window.addEventListener('scroll', updateNavigation);
+            window.addEventListener('resize', updateNavigation);
+
+            // Canvas setup utility
+            function setupCanvas(canvasId, drawFunction) {
+                const canvas = document.getElementById(canvasId);
+                const ctx = canvas.getContext('2d');
+                let animationFrameId;
+
+                function resizeCanvas() {
+                    const dpr = window.devicePixelRatio || 1;
+                    const rect = canvas.getBoundingClientRect();
+                    canvas.width = rect.width * dpr;
+                    canvas.height = rect.height * dpr;
+                    ctx.scale(dpr, dpr);
+                }
+
+                function animate() {
+                    const rect = canvas.getBoundingClientRect();
+                    ctx.clearRect(0, 0, rect.width, rect.height);
+                    drawFunction(ctx, rect.width, rect.height);
+                    animationFrameId = requestAnimationFrame(animate);
+                }
+                
+                window.addEventListener('resize', () => {
+                   cancelAnimationFrame(animationFrameId);
+                   resizeCanvas();
+                   animate();
+                });
+
+                resizeCanvas();
+                animate();
+                return { canvas, ctx };
+            }
+
+            // Rampa Canvas Logic (Automatic Ball Movement)
+            let rampaBallX = 20;
+            let rampaDirection = 1; // 1 for right, -1 for left
+            const rampaSpeed = 0.5; // Pixels per frame
+            const { canvas: rampaCanvas } = setupCanvas('rampaCanvas', (ctx, width, height) => {
+                ctx.beginPath();
+                ctx.moveTo(0, height * 0.8);
+                ctx.lineTo(width, height * 0.2);
+                ctx.strokeStyle = '#94a3b8'; /* slate-400 */
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                // Update ball position
+                rampaBallX += rampaDirection * rampaSpeed;
+                if (rampaBallX > width - 10 || rampaBallX < 10) {
+                    rampaDirection *= -1; // Reverse direction
+                }
+                const slope = (height * 0.2 - height * 0.8) / width;
+                const rampaBallY = slope * rampaBallX + height * 0.8;
+
+                ctx.beginPath();
+                ctx.arc(rampaBallX, rampaBallY, 10, 0, Math.PI * 2);
+                ctx.fillStyle = '#0e7490'; /* cyan-700 */
+                ctx.fill();
+            });
+
+            // Escada Canvas Logic (Automatic Ball Movement)
+            let escadaCurrentStep = 0;
+            let escadaDirection = 1; // 1 for up, -1 for down
+            const escadaInterval = 1000; // Milliseconds per step
+            let lastEscadaTime = 0;
+
+            const { canvas: escadaCanvas } = setupCanvas('escadaCanvas', (ctx, width, height) => {
+                const totalSteps = 5;
+                const stepWidth = width / totalSteps;
+                const stepHeight = (height * 0.6) / totalSteps;
+
+                ctx.strokeStyle = '#94a3b8'; /* slate-400 */
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(0, height * 0.8);
+                for (let i = 0; i < totalSteps; i++) {
+                    ctx.lineTo(stepWidth * (i + 1), height * 0.8 - stepHeight * i);
+                    ctx.lineTo(stepWidth * (i + 1), height * 0.8 - stepHeight * (i + 1));
+                }
+                ctx.stroke();
+
+                const ballStepX = (escadaCurrentStep + 0.5) * stepWidth;
+                const ballStepY = height * 0.8 - (escadaCurrentStep + 0.5) * stepHeight;
+
+                ctx.beginPath();
+                ctx.arc(ballStepX, ballStepY, 10, 0, Math.PI * 2);
+                ctx.fillStyle = '#0e7490'; /* cyan-700 */
+                ctx.fill();
+            });
+
+            setInterval(() => {
+                const totalSteps = 5;
+                escadaCurrentStep += escadaDirection;
+                if (escadaCurrentStep >= totalSteps || escadaCurrentStep < 0) {
+                    escadaDirection *= -1; // Reverse direction
+                    escadaCurrentStep = Math.max(0, Math.min(totalSteps, escadaCurrentStep)); // Keep within bounds
+                }
+            }, escadaInterval);
+
+            // Remote Control Animation Logic (Automatic Loop)
+            const remoteAnimationContainer = document.getElementById('remote-animation-container');
+            let photonCount = 0;
+
+            setInterval(() => {
+                if (photonCount < 3) { // Emit 3 photons in quick succession
+                    const photon = document.createElement('div');
+                    photon.textContent = '·';
+                    photon.className = 'absolute text-4xl text-cyan-500 font-bold';
+                    photon.style.left = '25%';
+                    photon.style.opacity = 1;
+                    remoteAnimationContainer.appendChild(photon);
+
+                    let start = null;
+                    function step(timestamp) {
+                        if (!start) start = timestamp;
+                        const progress = timestamp - start;
+                        const newLeft = 25 + progress * 0.1;
+                        if (newLeft < 75) {
+                            photon.style.left = `${newLeft}%`;
+                            requestAnimationFrame(step);
+                        } else {
+                            photon.style.opacity = 0;
+                            setTimeout(() => photon.remove(), 500);
+                        }
+                    }
+                    requestAnimationFrame(step);
+                    photonCount++;
+                } else {
+                    photonCount = 0; // Reset count to start new burst
+                }
+            }, 1500); // Trigger a burst of photons every 1.5 seconds
+
+            // Atom Canvas Logic (Automatic Electron Movement)
+            let electronLevel = 0;
+            let electronDirection = 1; // 1 for outward, -1 for inward
+            const electronInterval = 1500; // Milliseconds per jump
+            const orbitRadii = [60, 100, 140];
+            const atomMessage = document.getElementById('atom-message');
+
+            const { canvas: atomCanvas } = setupCanvas('atomCanvas', (ctx, width, height) => {
+                const centerX = width / 2;
+                const centerY = height / 2;
+                
+                orbitRadii.forEach(radius => {
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+                    ctx.setLineDash([5, 5]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                });
+
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 20, 0, Math.PI * 2);
+                ctx.fillStyle = '#155e75';
+                ctx.fill();
+                
+                const electronRadius = orbitRadii[electronLevel];
+                ctx.beginPath();
+                ctx.arc(centerX + electronRadius, centerY, 8, 0, Math.PI * 2);
+                ctx.fillStyle = '#0e7490';
+                ctx.fill();
+            });
+
+            setInterval(() => {
+                if (electronDirection === 1) { // Moving outward
+                    if (electronLevel < orbitRadii.length - 1) {
+                        electronLevel++;
+                        atomMessage.textContent = 'Elétron absorveu energia!';
+                    } else {
+                        electronDirection = -1; // Reverse direction
+                        electronLevel--;
+                        atomMessage.textContent = 'Elétron emitiu energia!';
+                    }
+                } else { // Moving inward
+                    if (electronLevel > 0) {
+                        electronLevel--;
+                        atomMessage.textContent = 'Elétron emitiu energia!';
+                    } else {
+                        electronDirection = 1; // Reverse direction
+                        electronLevel++;
+                        atomMessage.textContent = 'Elétron absorveu energia!';
+                    }
+                }
+                setTimeout(() => { atomMessage.textContent = ''; }, 1000); // Clear message
+            }, electronInterval);
+        });
+    </script>
+</body>
+</html>
