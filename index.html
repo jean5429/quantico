@@ -65,7 +65,7 @@
             font-family: serif; /* To make mathematical symbols look more traditional */
             font-size: 2.5rem; /* Large size */
             line-height: 1.2;
-            color: #1a202c; /* Darker color for contrast */
+            color: white; /* Darker color for contrast on light background for mobile/tablet */
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         @media (min-width: 768px) {
@@ -75,7 +75,7 @@
         }
         @media (min-width: 1024px) {
             .complex-formula {
-                color: white;
+                color: white; /* White for larger screens on dark background */
                 text-shadow: 1px;
                 font-size: 5rem;
             }
@@ -125,7 +125,7 @@
                     <h4 class="text-2xl font-bold mb-2 text-slate-800">Mundo Quântico: A Escada</h4>
                     <p class="mb-4 text-slate-600 font-light">Discreto. Apenas degraus.</p>
                     <div class="bg-slate-100 rounded-lg p-2">
-                           <canvas id="escadaCanvas" class="w-full h-48 rounded-md"></canvas>
+                            <canvas id="escadaCanvas" class="w-full h-48 rounded-md"></canvas>
                     </div>
                 </div>
             </div>
@@ -142,8 +142,8 @@
                          <p class="text-slate-600 mb-4 font-light">Seu controle remoto envia "pacotes" de luz (fótons).</p>
                      </div>
                      <div id="remote-animation-container" class="relative flex items-center justify-around h-40">
-                           <div class="text-7xl">🕹️</div>
-                           <div class="text-7xl">📺</div>
+                             <div class="text-7xl">🕹️</div>
+                             <div class="text-7xl">📺</div>
                      </div>
                  </div>
             </div>
@@ -152,7 +152,7 @@
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div class="order-2 md:order-1">
                        <div class="bg-slate-100 rounded-lg p-2">
-                            <canvas id="atomCanvas" class="w-full h-64 md:h-80 rounded-md"></canvas>
+                             <canvas id="atomCanvas" class="w-full h-64 md:h-80 rounded-md"></canvas>
                        </div>
                     </div>
                     <div class="text-center md:text-left order-1 md:order-2">
@@ -279,14 +279,23 @@
             // Custom scroll logic for full-page jumps (Mouse Wheel and Touch)
             let scrollTimeout;
             const scrollThreshold = 50; // Minimum scroll delta to trigger a page jump
+            let startY = 0; // To track touch start Y position
 
             function handleScrollEvent(e) {
                 e.preventDefault(); // Prevent default scroll behavior
 
                 if (isScrolling) return;
 
-                let delta = e.deltaY || (e.touches ? e.touches[0].clientY - (e._lastY || e.touches[0].clientY) : 0);
-                if (e.touches) e._lastY = e.touches[0].clientY; // Store last Y for touch delta calculation
+                let delta = 0;
+                if (e.type === 'wheel') {
+                    delta = e.deltaY;
+                } else if (e.type === 'touchstart') {
+                    startY = e.touches[0].clientY; // Initialize startY on touchstart
+                    return; // Don't process scroll on touchstart, wait for touchmove
+                } else if (e.type === 'touchmove') {
+                    delta = startY - e.touches[0].clientY; // Calculate delta for touchmove
+                    startY = e.touches[0].clientY; // Update startY for next move
+                }
 
                 if (Math.abs(delta) < scrollThreshold) return; // Ignore small scrolls
 
@@ -294,7 +303,7 @@
                 clearTimeout(scrollTimeout); // Clear any pending scroll actions
 
                 let targetSectionIndex = currentSectionIndex;
-                if (delta > 0) { // Scrolling down
+                if (delta > 0) { // Scrolling down (deltaY positive for wheel, startY - currentY positive for touchmove)
                     targetSectionIndex = Math.min(sections.length - 1, currentSectionIndex + 1);
                 } else { // Scrolling up
                     targetSectionIndex = Math.max(0, currentSectionIndex - 1);
@@ -302,15 +311,14 @@
 
                 sections[targetSectionIndex].scrollIntoView({ behavior: 'smooth' });
 
-                // Reset isScrolling flag after a short delay to allow the scroll animation to complete
                 scrollTimeout = setTimeout(() => {
                     isScrolling = false;
-                    updateNavigation(); // Ensure navigation state is correct after programmatic scroll
+                    updateNavigation();
                 }, 700); // Adjust delay based on scroll-behavior: smooth duration
             }
 
             window.addEventListener('wheel', handleScrollEvent, { passive: false });
-            window.addEventListener('touchstart', (e) => { e._lastY = e.touches[0].clientY; }, { passive: false });
+            window.addEventListener('touchstart', handleScrollEvent, { passive: false });
             window.addEventListener('touchmove', handleScrollEvent, { passive: false });
 
 
