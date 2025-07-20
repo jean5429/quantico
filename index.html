@@ -59,7 +59,7 @@
             font-family: serif;
             font-size: 2.5rem;
             line-height: 1.2;
-            color: #334155; /* slate-700 for better contrast on mobile */
+            color: white; /* Always white */
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         @media (min-width: 768px) {
@@ -69,8 +69,6 @@
         }
         @media (min-width: 1024px) {
             .complex-formula {
-                color: white;
-                text-shadow: 1px;
                 font-size: 5rem;
             }
         }
@@ -103,7 +101,8 @@
             <div class="text-9xl mt-12 animate-bounce">✨</div>
         </section>
 
-        <section id="analogia" class="text-center">
+        <!-- Seção "A Ideia Central: Pacotes" para Desktop (lado a lado) -->
+        <section id="analogia-desktop" class="text-center hidden md:flex">
             <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">A Ideia Central: Pacotes</h3>
             <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">"Quantum" significa <b>quantidade discreta</b>. Pense na diferença entre uma rampa e uma escada. Veja!</p>
             <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center w-full max-w-4xl">
@@ -124,7 +123,34 @@
             </div>
         </section>
 
-        <section id="exemplos" class="text-center">
+        <!-- Seção "A Ideia Central: Pacotes" - Mundo Clássico para Mobile -->
+        <section id="analogia-rampa-mobile" class="text-center md:hidden">
+            <h3 class="text-4xl font-bold text-slate-800 mb-6">A Ideia Central: Pacotes</h3>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">"Quantum" significa <b>quantidade discreta</b>. Pense na diferença entre uma rampa e uma escada. Veja!</p>
+            <div class="card text-center w-full max-w-md">
+                <h4 class="text-2xl font-bold mb-2 text-slate-800">Mundo Clássico: A Rampa</h4>
+                <p class="mb-4 text-slate-600 font-light">Contínuo. Sem interrupções.</p>
+                <div class="bg-slate-100 rounded-lg p-2">
+                    <canvas id="rampaCanvasMobile" class="w-full h-48 rounded-md"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "A Ideia Central: Pacotes" - Mundo Quântico para Mobile -->
+        <section id="analogia-escada-mobile" class="text-center md:hidden">
+            <h3 class="text-4xl font-bold text-slate-800 mb-6">A Ideia Central: Pacotes (Continuação)</h3>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">O "quântico" é discreto. Apenas degraus.</p>
+            <div class="card text-center w-full max-w-md">
+                <h4 class="text-2xl font-bold mb-2 text-slate-800">Mundo Quântico: A Escada</h4>
+                <p class="mb-4 text-slate-600 font-light">Discreto. Apenas degraus.</p>
+                <div class="bg-slate-100 rounded-lg p-2">
+                        <canvas id="escadaCanvasMobile" class="w-full h-48 rounded-md"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Exemplos do Dia a Dia" para Desktop (lado a lado) -->
+        <section id="exemplos-desktop" class="text-center hidden md:flex">
              <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Exemplos do Dia a Dia</h3>
              <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">Essa ideia de "pacotes" acontece de verdade com luz e partículas. Veja como:</p>
 
@@ -152,6 +178,46 @@
                         <h4 class="text-2xl font-bold mb-2 text-slate-800">Elétrons em Degraus</h4>
                         <p class="text-slate-600 mb-4 font-light">Elétrons em átomos ocupam "degraus" de energia.</p>
                         <p id="atom-message" class="mt-4 text-center md:text-left font-semibold text-cyan-700 h-5"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Exemplos do Dia a Dia" - Luz em Pacotes para Mobile -->
+        <section id="exemplos-fotons-mobile" class="text-center md:hidden">
+             <h3 class="text-4xl font-bold text-slate-800 mb-6">Exemplos do Dia a Dia</h3>
+             <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">Essa ideia de "pacotes" acontece de verdade com luz e partículas. Veja como:</p>
+
+            <div class="card mb-12 w-full max-w-md">
+                 <div class="grid gap-8 items-center">
+                     <div class="text-center">
+                         <h4 class="text-2xl font-bold mb-2 text-slate-800">Luz em Pacotes: Fótons</h4>
+                         <p class="text-slate-600 mb-4 font-light">Seu controle remoto envia "pacotes" de luz (fótons).</p>
+                     </div>
+                     <div id="remote-animation-container-mobile" class="relative flex items-center justify-around h-40">
+                             <div class="text-7xl">🕹️</div>
+                             <div class="text-7xl">📺</div>
+                     </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Seção "Exemplos do Dia a Dia" - Elétrons em Degraus para Mobile -->
+        <section id="exemplos-eletrons-mobile" class="text-center md:hidden">
+             <h3 class="text-4xl font-bold text-slate-800 mb-6">Exemplos do Dia a Dia (Continuação)</h3>
+             <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">A física quântica é a base da tecnologia moderna. Ela está em:</p>
+
+            <div class="card w-full max-w-md">
+                <div class="grid gap-8 items-center">
+                    <div>
+                       <div class="bg-slate-100 rounded-lg p-2">
+                             <canvas id="atomCanvasMobile" class="w-full h-64 md:h-80 rounded-md"></canvas>
+                       </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="text-2xl font-bold mb-2 text-slate-800">Elétrons em Degraus</h4>
+                        <p class="text-slate-600 mb-4 font-light">Elétrons em átomos ocupam "degraus" de energia.</p>
+                        <p id="atom-message-mobile" class="mt-4 text-center font-semibold text-cyan-700 h-5"></p>
                     </div>
                 </div>
             </div>
@@ -220,7 +286,7 @@
                     cycledText.textContent = texts[textIndex];
                     cycledText.style.opacity = 1;
                 }, 500);
-            }, 900);
+            }, 3000);
 
             sections.forEach((_, index) => {
                 const dot = document.createElement('div');
@@ -296,10 +362,11 @@
 
                 sections[targetSectionIndex].scrollIntoView({ behavior: 'smooth' });
 
+                const scrollDelay = window.innerWidth < 768 ? 400 : 700; // Faster scroll for mobile
                 scrollTimeout = setTimeout(() => {
                     isScrolling = false;
                     updateNavigation();
-                }, 700);
+                }, scrollDelay);
             }
 
             window.addEventListener('wheel', handleScrollEvent, { passive: false });
@@ -312,6 +379,7 @@
 
             function setupCanvas(canvasId, drawFunction) {
                 const canvas = document.getElementById(canvasId);
+                if (!canvas) return null; // Handle cases where canvas might not exist on current view
                 const ctx = canvas.getContext('2d');
                 let animationFrameId;
 
@@ -324,6 +392,10 @@
                 }
 
                 function animate() {
+                    if (!canvas.isConnected) { // Stop animation if canvas is no longer in DOM
+                        cancelAnimationFrame(animationFrameId);
+                        return;
+                    }
                     const rect = canvas.getBoundingClientRect();
                     ctx.clearRect(0, 0, rect.width, rect.height);
                     drawFunction(ctx, rect.width, rect.height);
@@ -344,7 +416,27 @@
             let rampaBallX = 20;
             let rampaDirection = 1;
             const rampaSpeed = 0.5;
-            const { canvas: rampaCanvas } = setupCanvas('rampaCanvas', (ctx, width, height) => {
+            setupCanvas('rampaCanvas', (ctx, width, height) => {
+                ctx.beginPath();
+                ctx.moveTo(0, height * 0.8);
+                ctx.lineTo(width, height * 0.2);
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                rampaBallX += rampaDirection * rampaSpeed;
+                if (rampaBallX > width - 10 || rampaBallX < 10) {
+                    rampaDirection *= -1;
+                }
+                const slope = (height * 0.2 - height * 0.8) / width;
+                const rampaBallY = slope * rampaBallX + height * 0.8;
+
+                ctx.beginPath();
+                ctx.arc(rampaBallX, rampaBallY, 10, 0, Math.PI * 2);
+                ctx.fillStyle = '#0e7490';
+                ctx.fill();
+            });
+            setupCanvas('rampaCanvasMobile', (ctx, width, height) => {
                 ctx.beginPath();
                 ctx.moveTo(0, height * 0.8);
                 ctx.lineTo(width, height * 0.2);
@@ -368,9 +460,31 @@
             let escadaCurrentStep = 0;
             let escadaDirection = 1;
             const escadaInterval = 1000;
-            let lastEscadaTime = 0;
 
-            const { canvas: escadaCanvas } = setupCanvas('escadaCanvas', (ctx, width, height) => {
+            setupCanvas('escadaCanvas', (ctx, width, height) => {
+                const totalSteps = 5;
+                const stepWidth = width / totalSteps;
+                const stepHeight = (height * 0.6) / totalSteps;
+
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(0, height * 0.8);
+                for (let i = 0; i < totalSteps; i++) {
+                    ctx.lineTo(stepWidth * (i + 1), height * 0.8 - stepHeight * i);
+                    ctx.lineTo(stepWidth * (i + 1), height * 0.8 - stepHeight * (i + 1));
+                }
+                ctx.stroke();
+
+                const ballStepX = (escadaCurrentStep + 0.5) * stepWidth;
+                const ballStepY = height * 0.8 - (escadaCurrentStep + 0.5) * stepHeight;
+
+                ctx.beginPath();
+                ctx.arc(ballStepX, ballStepY, 10, 0, Math.PI * 2);
+                ctx.fillStyle = '#0e7490';
+                ctx.fill();
+            });
+            setupCanvas('escadaCanvasMobile', (ctx, width, height) => {
                 const totalSteps = 5;
                 const stepWidth = width / totalSteps;
                 const stepHeight = (height * 0.6) / totalSteps;
@@ -404,44 +518,52 @@
             }, escadaInterval);
 
             const remoteAnimationContainer = document.getElementById('remote-animation-container');
+            const remoteAnimationContainerMobile = document.getElementById('remote-animation-container-mobile');
             let photonCount = 0;
 
-            setInterval(() => {
-                if (photonCount < 3) {
-                    const photon = document.createElement('div');
-                    photon.textContent = '·';
-                    photon.className = 'absolute text-4xl text-cyan-500 font-bold';
-                    photon.style.left = '25%';
-                    photon.style.opacity = 1;
-                    remoteAnimationContainer.appendChild(photon);
+            function createPhotonAnimation(container) {
+                if (!container) return;
+                setInterval(() => {
+                    if (photonCount < 3) {
+                        const photon = document.createElement('div');
+                        photon.textContent = '·';
+                        photon.className = 'absolute text-4xl text-cyan-500 font-bold';
+                        photon.style.left = '25%';
+                        photon.style.opacity = 1;
+                        container.appendChild(photon);
 
-                    let start = null;
-                    function step(timestamp) {
-                        if (!start) start = timestamp;
-                        const progress = timestamp - start;
-                        const newLeft = 25 + progress * 0.1;
-                        if (newLeft < 75) {
-                            photon.style.left = `${newLeft}%`;
-                            requestAnimationFrame(step);
-                        } else {
-                            photon.style.opacity = 0;
-                            setTimeout(() => photon.remove(), 500);
+                        let start = null;
+                        function step(timestamp) {
+                            if (!start) start = timestamp;
+                            const progress = timestamp - start;
+                            const newLeft = 25 + progress * 0.1;
+                            if (newLeft < 75) {
+                                photon.style.left = `${newLeft}%`;
+                                requestAnimationFrame(step);
+                            } else {
+                                photon.style.opacity = 0;
+                                setTimeout(() => photon.remove(), 500);
+                            }
                         }
+                        requestAnimationFrame(step);
+                        photonCount++;
+                    } else {
+                        photonCount = 0;
                     }
-                    requestAnimationFrame(step);
-                    photonCount++;
-                } else {
-                    photonCount = 0;
-                }
-            }, 1500);
+                }, 1500);
+            }
+            createPhotonAnimation(remoteAnimationContainer);
+            createPhotonAnimation(remoteAnimationContainerMobile);
+
 
             let electronLevel = 0;
             let electronDirection = 1;
             const electronInterval = 1500;
             const orbitRadii = [60, 100, 140];
             const atomMessage = document.getElementById('atom-message');
+            const atomMessageMobile = document.getElementById('atom-message-mobile');
 
-            const { canvas: atomCanvas } = setupCanvas('atomCanvas', (ctx, width, height) => {
+            function drawAtom(ctx, width, height, currentElectronLevel, messageElement) {
                 const centerX = width / 2;
                 const centerY = height / 2;
                 
@@ -459,34 +581,45 @@
                 ctx.fillStyle = '#155e75';
                 ctx.fill();
                 
-                const electronRadius = orbitRadii[electronLevel];
+                const electronRadius = orbitRadii[currentElectronLevel];
                 ctx.beginPath();
                 ctx.arc(centerX + electronRadius, centerY, 8, 0, Math.PI * 2);
                 ctx.fillStyle = '#0e7490';
                 ctx.fill();
-            });
+            }
+
+            setupCanvas('atomCanvas', (ctx, width, height) => drawAtom(ctx, width, height, electronLevel, atomMessage));
+            setupCanvas('atomCanvasMobile', (ctx, width, height) => drawAtom(ctx, width, height, electronLevel, atomMessageMobile));
+
 
             setInterval(() => {
                 if (electronDirection === 1) {
                     if (electronLevel < orbitRadii.length - 1) {
                         electronLevel++;
-                        atomMessage.textContent = 'Elétron absorveu energia!';
+                        if (atomMessage) atomMessage.textContent = 'Elétron absorveu energia!';
+                        if (atomMessageMobile) atomMessageMobile.textContent = 'Elétron absorveu energia!';
                     } else {
                         electronDirection = -1;
                         electronLevel--;
-                        atomMessage.textContent = 'Elétron emitiu energia!';
+                        if (atomMessage) atomMessage.textContent = 'Elétron emitiu energia!';
+                        if (atomMessageMobile) atomMessageMobile.textContent = 'Elétron emitiu energia!';
                     }
                 } else {
                     if (electronLevel > 0) {
                         electronLevel--;
-                        atomMessage.textContent = 'Elétron emitiu energia!';
+                        if (atomMessage) atomMessage.textContent = 'Elétron emitiu energia!';
+                        if (atomMessageMobile) atomMessageMobile.textContent = 'Elétron emitiu energia!';
                     } else {
                         electronDirection = 1;
                         electronLevel++;
-                        atomMessage.textContent = 'Elétron absorveu energia!';
+                        if (atomMessage) atomMessage.textContent = 'Elétron absorveu energia!';
+                        if (atomMessageMobile) atomMessageMobile.textContent = 'Elétron absorveu energia!';
                     }
                 }
-                setTimeout(() => { atomMessage.textContent = ''; }, 1000);
+                setTimeout(() => { 
+                    if (atomMessage) atomMessage.textContent = '';
+                    if (atomMessageMobile) atomMessageMobile.textContent = '';
+                }, 1000);
             }, electronInterval);
         });
     </script>
