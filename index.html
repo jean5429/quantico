@@ -8,34 +8,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- MathJax for LaTeX rendering -->
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
-    <!-- Chosen Palette: Calm Harmony with Liquid Glass Inspiration -->
-    <!-- Application Structure Plan: The application maintains its "full-page scroll" experience, where each section occupies the full viewport and snaps into place. The primary navigation is now exclusively through mouse scroll (or touch swipe) and the fixed footer's pagination dots/progress bar. This structure is highly immersive and visually driven, ideal for a general audience to consume complex information in bite-sized, interactive chunks. The header remains removed for a cleaner, focused UI. -->
-    <!-- Visualization & Content Choices: 1. Misused Terms: Goal(Inform) -> Dynamic text rotator(Presentation) -> Automatic cycle(Interaction) -> Concise text, visually engaging. Vanilla JS(Method). 2. Ramp vs. Stairs Analogy: Goal(Compare) -> Two side-by-side interactive canvases(Presentation) -> Balls now automatically move in a loop, demonstrating continuous vs. discrete without user interaction(Interaction) -> Directly illustrates the core concept. HTML Canvas/JS(Method). 3. Photons (Remote Control): Goal(Explain) -> Simplified animation with emojis(Presentation) -> Photon emission now loops automatically(Interaction) -> Direct, simple visualization of "packets." HTML/CSS/JS(Method). 4. Electron Orbits: Goal(Organize/Explain) -> Interactive atomic model diagram(Presentation) -> Electron now automatically moves between energy levels in a loop(Interaction) -> Visualizes abstract energy levels concretely. HTML Canvas/JS(Method). 5. Applications: Goal(Inform) -> Grid of cards with minimal text(Presentation) -> Hover for brief detail(Interaction) -> Quick overview of real-world impact. HTML/CSS/Method). 6. Footer Pagination/Progress: Goal(Navigate/Inform Progress) -> Dots for pages, horizontal bar for progress(Presentation) -> Click dots for direct navigation, bar updates on scroll(Interaction) -> Provides clear navigation and sense of progress. HTML/CSS/JS(Method). -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
-            color: #334155; /* slate-700 */
-            overflow-y: hidden; /* Hide default scrollbar to enforce custom scroll behavior */
-            scroll-behavior: smooth; /* Ensure smooth programmatic scrolling */
+            background-color: #f8fafc;
+            color: #334155;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
         }
         section {
-            min-height: 100vh; /* Each section takes full viewport height */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem 1.5rem; /* Consistent padding */
-            box-sizing: border-box; /* Include padding in height calculation */
-            position: relative; /* For background effects */
+            padding: 2rem 1.5rem;
+            box-sizing: border-box;
+            position: relative;
         }
         .quantum-text-gradient {
-            background: linear-gradient(to right, #0e7490, #155e75); /* cyan-700 to cyan-800 */
+            background: linear-gradient(to right, #0e7490, #155e75);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -43,7 +38,7 @@
             @apply px-6 py-3 bg-cyan-600 text-white font-semibold rounded-full shadow-lg hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-75 transition-colors duration-300 transform hover:scale-105;
         }
         .card {
-            @apply bg-white/70 backdrop-blur-md p-6 rounded-3xl shadow-xl border border-slate-100; /* Liquid Glass effect */
+            @apply bg-white/70 backdrop-blur-md p-6 rounded-3xl shadow-xl border border-slate-100;
         }
         canvas {
             touch-action: none;
@@ -54,18 +49,17 @@
         .footer-nav-dot.active {
             @apply bg-cyan-600 w-4 h-4;
         }
-        /* Subtle glow for sections */
         section:nth-child(odd) {
-            box-shadow: inset 0 0 50px rgba(14, 116, 144, 0.05); /* subtle cyan glow */
+            box-shadow: inset 0 0 50px rgba(14, 116, 144, 0.05);
         }
         section:nth-child(even) {
-            box-shadow: inset 0 0 50px rgba(21, 94, 117, 0.05); /* subtle darker cyan glow */
+            box-shadow: inset 0 0 50px rgba(21, 94, 117, 0.05);
         }
         .complex-formula {
-            font-family: serif; /* To make mathematical symbols look more traditional */
-            font-size: 2.5rem; /* Large size */
+            font-family: serif;
+            font-size: 2.5rem;
             line-height: 1.2;
-            color: white; /* Darker color for contrast on light background for mobile/tablet */
+            color: #334155; /* slate-700 for better contrast on mobile */
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         @media (min-width: 768px) {
@@ -75,7 +69,7 @@
         }
         @media (min-width: 1024px) {
             .complex-formula {
-                color: white; /* White for larger screens on dark background */
+                color: white;
                 text-shadow: 1px;
                 font-size: 5rem;
             }
@@ -91,7 +85,6 @@
             <p class="text-xl md:text-2xl font-light text-slate-300 max-w-4xl mx-auto mb-12">
                 A Dualidade Onda-Partícula e a Superposição de Estados no Emaranhamento Quântico
             </p>
-            <!-- MathJax will render this LaTeX formula -->
             <div class="complex-formula px-4">
                 $$ i\hbar \frac{\partial}{\partial t} |\Psi(t)\rangle = \hat{H} |\Psi(t)\rangle $$
             </div>
@@ -167,13 +160,13 @@
         <section id="aplicacoes" class="text-center">
              <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Impacto no Seu Dia</h3>
              <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-10 font-light">A física quântica é a base da tecnologia moderna. Ela está em:</p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-6xl">
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-6xl">
                 <div class="card text-center group">
                     <div class="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">💻</div>
                     <h4 class="text-xl font-bold mb-2 text-slate-800">Microchips</h4>
                     <p class="text-slate-600 text-sm font-light">Controle de elétrons em "degraus".</p>
                 </div>
-                 <div class="card text-center group">
+                <div class="card text-center group">
                     <div class="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">💿</div>
                     <h4 class="text-xl font-bold mb-2 text-slate-800">Lasers</h4>
                     <p class="text-slate-600 text-sm font-light">Elétrons emitem "pacotes" de luz.</p>
@@ -183,7 +176,7 @@
                     <h4 class="text-xl font-bold mb-2 text-slate-800">Energia Solar</h4>
                     <p class="text-slate-600 text-sm font-light">Fótons "empurram" elétrons.</p>
                 </div>
-                 <div class="card text-center group">
+                <div class="card text-center group">
                     <div class="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">🩺</div>
                     <h4 class="text-xl font-bold mb-2 text-slate-800">Ressonância Magnética</h4>
                     <p class="text-slate-600 text-sm font-light">Usa o "spin" quântico.</p>
@@ -202,9 +195,7 @@
     <footer class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-slate-200 py-4 z-50">
         <div class="container mx-auto px-6 flex justify-center items-center space-x-4">
             <div id="footer-nav-dots" class="flex space-x-3">
-                <!-- Dots will be generated here by JS -->
             </div>
-            <!-- Adjusted width for the progress bar to occupy full available space -->
             <div class="flex-grow w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div id="progress-bar" class="h-full bg-cyan-600 transition-all duration-300 ease-out" style="width: 0%;"></div>
             </div>
@@ -220,19 +211,17 @@
             const texts = ["TV Quântica", "Terapia Quântica", "Palestras Quânticas", "Massagem Quântica"];
             let textIndex = 0;
             let currentSectionIndex = 0;
-            let isScrolling = false; // Flag to prevent rapid scrolling
+            let isScrolling = false;
 
-            // Dynamic text rotator
             setInterval(() => {
-                cycledText.style.opacity = 0; // Fade out
+                cycledText.style.opacity = 0;
                 setTimeout(() => {
                     textIndex = (textIndex + 1) % texts.length;
                     cycledText.textContent = texts[textIndex];
-                    cycledText.style.opacity = 1; // Fade in
-                }, 500); // Wait for fade out to complete before changing text and fading in
+                    cycledText.style.opacity = 1;
+                }, 500);
             }, 3000);
 
-            // Generate footer navigation dots
             sections.forEach((_, index) => {
                 const dot = document.createElement('div');
                 dot.className = 'footer-nav-dot';
@@ -245,15 +234,13 @@
 
             const navDots = document.querySelectorAll('.footer-nav-dot');
 
-            // Update active dot and progress bar based on scroll position
             function updateNavigation() {
                 let newCurrentSectionIndex = 0;
                 let minDistance = Infinity;
 
                 sections.forEach((section, index) => {
                     const rect = section.getBoundingClientRect();
-                    // Use absolute distance from viewport top to find the closest section
-                    const distance = Math.abs(rect.top); 
+                    const distance = Math.abs(rect.top);
                     if (distance < minDistance) {
                         minDistance = distance;
                         newCurrentSectionIndex = index;
@@ -271,18 +258,16 @@
                     });
                 }
 
-                // Calculate progress based on the current section index
                 const progress = (currentSectionIndex / (sections.length - 1)) * 100;
                 progressBar.style.width = `${progress}%`;
             }
 
-            // Custom scroll logic for full-page jumps (Mouse Wheel and Touch)
             let scrollTimeout;
-            const scrollThreshold = 50; // Minimum scroll delta to trigger a page jump
-            let startY = 0; // To track touch start Y position
+            const scrollThreshold = 50;
+            let startY = 0;
 
             function handleScrollEvent(e) {
-                e.preventDefault(); // Prevent default scroll behavior
+                e.preventDefault();
 
                 if (isScrolling) return;
 
@@ -290,22 +275,22 @@
                 if (e.type === 'wheel') {
                     delta = e.deltaY;
                 } else if (e.type === 'touchstart') {
-                    startY = e.touches[0].clientY; // Initialize startY on touchstart
-                    return; // Don't process scroll on touchstart, wait for touchmove
+                    startY = e.touches[0].clientY;
+                    return;
                 } else if (e.type === 'touchmove') {
-                    delta = startY - e.touches[0].clientY; // Calculate delta for touchmove
-                    startY = e.touches[0].clientY; // Update startY for next move
+                    delta = startY - e.touches[0].clientY;
+                    startY = e.touches[0].clientY;
                 }
 
-                if (Math.abs(delta) < scrollThreshold) return; // Ignore small scrolls
+                if (Math.abs(delta) < scrollThreshold) return;
 
                 isScrolling = true;
-                clearTimeout(scrollTimeout); // Clear any pending scroll actions
+                clearTimeout(scrollTimeout);
 
                 let targetSectionIndex = currentSectionIndex;
-                if (delta > 0) { // Scrolling down (deltaY positive for wheel, startY - currentY positive for touchmove)
+                if (delta > 0) {
                     targetSectionIndex = Math.min(sections.length - 1, currentSectionIndex + 1);
-                } else { // Scrolling up
+                } else {
                     targetSectionIndex = Math.max(0, currentSectionIndex - 1);
                 }
 
@@ -314,20 +299,17 @@
                 scrollTimeout = setTimeout(() => {
                     isScrolling = false;
                     updateNavigation();
-                }, 700); // Adjust delay based on scroll-behavior: smooth duration
+                }, 700);
             }
 
             window.addEventListener('wheel', handleScrollEvent, { passive: false });
             window.addEventListener('touchstart', handleScrollEvent, { passive: false });
             window.addEventListener('touchmove', handleScrollEvent, { passive: false });
 
-
-            // Initial update and event listener for scroll (for programmatic scrolls)
             updateNavigation();
             window.addEventListener('scroll', updateNavigation);
             window.addEventListener('resize', updateNavigation);
 
-            // Canvas setup utility
             function setupCanvas(canvasId, drawFunction) {
                 const canvas = document.getElementById(canvasId);
                 const ctx = canvas.getContext('2d');
@@ -359,36 +341,33 @@
                 return { canvas, ctx };
             }
 
-            // Rampa Canvas Logic (Automatic Ball Movement)
             let rampaBallX = 20;
-            let rampaDirection = 1; // 1 for right, -1 for left
-            const rampaSpeed = 0.5; // Pixels per frame
+            let rampaDirection = 1;
+            const rampaSpeed = 0.5;
             const { canvas: rampaCanvas } = setupCanvas('rampaCanvas', (ctx, width, height) => {
                 ctx.beginPath();
                 ctx.moveTo(0, height * 0.8);
                 ctx.lineTo(width, height * 0.2);
-                ctx.strokeStyle = '#94a3b8'; /* slate-400 */
+                ctx.strokeStyle = '#94a3b8';
                 ctx.lineWidth = 4;
                 ctx.stroke();
 
-                // Update ball position
                 rampaBallX += rampaDirection * rampaSpeed;
                 if (rampaBallX > width - 10 || rampaBallX < 10) {
-                    rampaDirection *= -1; // Reverse direction
+                    rampaDirection *= -1;
                 }
                 const slope = (height * 0.2 - height * 0.8) / width;
                 const rampaBallY = slope * rampaBallX + height * 0.8;
 
                 ctx.beginPath();
                 ctx.arc(rampaBallX, rampaBallY, 10, 0, Math.PI * 2);
-                ctx.fillStyle = '#0e7490'; /* cyan-700 */
+                ctx.fillStyle = '#0e7490';
                 ctx.fill();
             });
 
-            // Escada Canvas Logic (Automatic Ball Movement)
             let escadaCurrentStep = 0;
-            let escadaDirection = 1; // 1 for up, -1 for down
-            const escadaInterval = 1000; // Milliseconds per step
+            let escadaDirection = 1;
+            const escadaInterval = 1000;
             let lastEscadaTime = 0;
 
             const { canvas: escadaCanvas } = setupCanvas('escadaCanvas', (ctx, width, height) => {
@@ -396,7 +375,7 @@
                 const stepWidth = width / totalSteps;
                 const stepHeight = (height * 0.6) / totalSteps;
 
-                ctx.strokeStyle = '#94a3b8'; /* slate-400 */
+                ctx.strokeStyle = '#94a3b8';
                 ctx.lineWidth = 4;
                 ctx.beginPath();
                 ctx.moveTo(0, height * 0.8);
@@ -411,7 +390,7 @@
 
                 ctx.beginPath();
                 ctx.arc(ballStepX, ballStepY, 10, 0, Math.PI * 2);
-                ctx.fillStyle = '#0e7490'; /* cyan-700 */
+                ctx.fillStyle = '#0e7490';
                 ctx.fill();
             });
 
@@ -419,17 +398,16 @@
                 const totalSteps = 5;
                 escadaCurrentStep += escadaDirection;
                 if (escadaCurrentStep >= totalSteps || escadaCurrentStep < 0) {
-                    escadaDirection *= -1; // Reverse direction
-                    escadaCurrentStep = Math.max(0, Math.min(totalSteps, escadaCurrentStep)); // Keep within bounds
+                    escadaDirection *= -1;
+                    escadaCurrentStep = Math.max(0, Math.min(totalSteps, escadaCurrentStep));
                 }
             }, escadaInterval);
 
-            // Remote Control Animation Logic (Automatic Loop)
             const remoteAnimationContainer = document.getElementById('remote-animation-container');
             let photonCount = 0;
 
             setInterval(() => {
-                if (photonCount < 3) { // Emit 3 photons in quick succession
+                if (photonCount < 3) {
                     const photon = document.createElement('div');
                     photon.textContent = '·';
                     photon.className = 'absolute text-4xl text-cyan-500 font-bold';
@@ -453,14 +431,13 @@
                     requestAnimationFrame(step);
                     photonCount++;
                 } else {
-                    photonCount = 0; // Reset count to start new burst
+                    photonCount = 0;
                 }
-            }, 1500); // Trigger a burst of photons every 1.5 seconds
+            }, 1500);
 
-            // Atom Canvas Logic (Automatic Electron Movement)
             let electronLevel = 0;
-            let electronDirection = 1; // 1 for outward, -1 for inward
-            const electronInterval = 1500; // Milliseconds per jump
+            let electronDirection = 1;
+            const electronInterval = 1500;
             const orbitRadii = [60, 100, 140];
             const atomMessage = document.getElementById('atom-message');
 
@@ -490,26 +467,26 @@
             });
 
             setInterval(() => {
-                if (electronDirection === 1) { // Moving outward
+                if (electronDirection === 1) {
                     if (electronLevel < orbitRadii.length - 1) {
                         electronLevel++;
                         atomMessage.textContent = 'Elétron absorveu energia!';
                     } else {
-                        electronDirection = -1; // Reverse direction
+                        electronDirection = -1;
                         electronLevel--;
                         atomMessage.textContent = 'Elétron emitiu energia!';
                     }
-                } else { // Moving inward
+                } else {
                     if (electronLevel > 0) {
                         electronLevel--;
                         atomMessage.textContent = 'Elétron emitiu energia!';
                     } else {
-                        electronDirection = 1; // Reverse direction
+                        electronDirection = 1;
                         electronLevel++;
                         atomMessage.textContent = 'Elétron absorveu energia!';
                     }
                 }
-                setTimeout(() => { atomMessage.textContent = ''; }, 1000); // Clear message
+                setTimeout(() => { atomMessage.textContent = ''; }, 1000);
             }, electronInterval);
         });
     </script>
